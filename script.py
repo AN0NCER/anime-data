@@ -76,14 +76,14 @@ for u in urls:
 
 print(data);
 
-# Сериализуйте словарь в формате JSON
+# Serialize the dictionary as JSON
 json_data = json.dumps(data)
 
-# Сохраните JSON в файл
+# Save JSON to file
 with open("data.json", "w") as f:
     f.write(json_data)
 
-#Обновление репозитория
+# Update repository
 repo = git.Repo(".")
 repo.git.add("data.json")
 repo.git.commit(message="Added data.json")
