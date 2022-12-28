@@ -5,11 +5,11 @@ import git
 from urllib.parse import urlparse, parse_qs
 
 urls = [
-    {"url": 'https://www.youtube.com/watch?v=KzJX5ChScfk', "anime": { "name": "Name1", "raiting": "0.1"}},
-    {"url": 'https://www.youtube.com/watch?v=vp67_9XtvZo', "anime": { "name": "Name2", "raiting": "0.2"}},
-    {"url": 'https://www.youtube.com/watch?v=eLJLNshdERc', "anime": { "name": "Name3", "raiting": "0.3"}},
-    {"url": 'https://www.youtube.com/watch?v=S3yRC4XwU_Q', "anime": { "name": "Name4", "raiting": "0.4"}},
-    {"url": 'https://www.youtube.com/watch?v=NhndeYcXRHA', "anime": { "name": "Name5", "raiting": "0.5"}}
+    {"url": 'https://www.youtube.com/watch?v=KzJX5ChScfk', "anime": { "name": "Name1", "raiting": "0.1", "url": "#"}},
+    {"url": 'https://www.youtube.com/watch?v=vp67_9XtvZo', "anime": { "name": "Name2", "raiting": "0.2", "url": "#"}},
+    {"url": 'https://www.youtube.com/watch?v=eLJLNshdERc', "anime": { "name": "Name3", "raiting": "0.3", "url": "#"}},
+    {"url": 'https://www.youtube.com/watch?v=S3yRC4XwU_Q', "anime": { "name": "Name4", "raiting": "0.4", "url": "#"}},
+    {"url": 'https://www.youtube.com/watch?v=NhndeYcXRHA', "anime": { "name": "Name5", "raiting": "0.5", "url": "#"}}
 ]
 
 data = {}
