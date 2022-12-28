@@ -5,11 +5,11 @@ import git
 from urllib.parse import urlparse, parse_qs
 
 urls = [
-    {"url": 'https://www.youtube.com/watch?v=KzJX5ChScfk', "anime": { "name": "Name1", "raiting": "0.1", "url": "#"}},
-    {"url": 'https://www.youtube.com/watch?v=vp67_9XtvZo', "anime": { "name": "Name2", "raiting": "0.2", "url": "#"}},
-    {"url": 'https://www.youtube.com/watch?v=eLJLNshdERc', "anime": { "name": "Name3", "raiting": "0.3", "url": "#"}},
-    {"url": 'https://www.youtube.com/watch?v=S3yRC4XwU_Q', "anime": { "name": "Name4", "raiting": "0.4", "url": "#"}},
-    {"url": 'https://www.youtube.com/watch?v=NhndeYcXRHA', "anime": { "name": "Name5", "raiting": "0.5", "url": "#"}}
+    {"url": 'https://www.youtube.com/watch?v=S-dOnVpNp0s', "anime": { "name": "Избранный богами 2", "raiting": "6.94", "url": "41312"}},
+    {"url": 'https://www.youtube.com/watch?v=ucdYsPAbFv4', "anime": { "name": "Папаши-дружбаны", "raiting": "?", "url": "53411"}},
+    {"url": 'https://www.youtube.com/watch?v=NnA3t5hU5ZU', "anime": { "name": "Герой мёртв!", "raiting": "7.48", "url": "51706"}},
+    {"url": 'https://www.youtube.com/watch?v=EJ9selhPFK8', "anime": { "name": "Магическая битва 2", "raiting": "8.67", "url": "51009"}},
+    {"url": 'https://www.youtube.com/watch?v=DI_m954xxM8', "anime": { "name": "Кайдзю номер восемь", "raiting": "7.80", "url": "52588"}}
 ]
 
 data = {}
