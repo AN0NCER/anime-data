@@ -5,11 +5,11 @@ import git
 from urllib.parse import urlparse, parse_qs
 
 urls = [
+    {"url": 'https://www.youtube.com/watch?v=2eOg5DoYuwU', "anime": { "name": "ファイトソング", "raiting": "10.0", "url": ""}},
     {"url": 'https://www.youtube.com/watch?v=S-dOnVpNp0s', "anime": { "name": "Избранный богами 2", "raiting": "6.94", "url": "41312"}},
     {"url": 'https://www.youtube.com/watch?v=ucdYsPAbFv4', "anime": { "name": "Папаши-дружбаны", "raiting": "0.00", "url": "53411"}},
     {"url": 'https://www.youtube.com/watch?v=NnA3t5hU5ZU', "anime": { "name": "Герой мёртв!", "raiting": "7.48", "url": "51706"}},
-    {"url": 'https://www.youtube.com/watch?v=EJ9selhPFK8', "anime": { "name": "Магическая битва 2", "raiting": "8.67", "url": "51009"}},
-    {"url": 'https://www.youtube.com/watch?v=DI_m954xxM8', "anime": { "name": "Кайдзю номер восемь", "raiting": "7.80", "url": "52588"}}
+    {"url": 'https://www.youtube.com/watch?v=EJ9selhPFK8', "anime": { "name": "Магическая битва 2", "raiting": "8.67", "url": "51009"}}
 ]
 
 data = {}
