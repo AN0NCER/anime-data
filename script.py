@@ -6,10 +6,10 @@ from urllib.parse import urlparse, parse_qs
 
 urls = [
     {"url": 'https://www.youtube.com/watch?v=Oqxm1mn917g', "anime": { "name": "Папаши-дружбаны", "raiting": "7.68", "url": "53411"}},
-    {"url": 'https://www.youtube.com/watch?v=2eOg5DoYuwU', "anime": { "name": "ファイトソング", "raiting": "10.0", "url": ""}},
     {"url": 'https://www.youtube.com/watch?v=yr0YpMLsEaA', "anime": { "name": "Непризнанный школой... 2", "raiting": "0.00", "url": "48418"}},
     {"url": 'https://www.youtube.com/watch?v=tfzsmLzyAVw', "anime": { "name": "Ложные выводы 2", "raiting": "7.14", "url": "44204"}},
-    {"url": 'https://www.youtube.com/watch?v=P5siWdBumBg', "anime": { "name": "Мой братик теперь не братик!", "raiting": "7.15", "url": "51678"}}
+    {"url": 'https://www.youtube.com/watch?v=P5siWdBumBg', "anime": { "name": "Мой братик теперь не братик!", "raiting": "7.15", "url": "51678"}},
+    {"url": 'https://www.youtube.com/watch?v=2eOg5DoYuwU', "anime": { "name": "ファイトソング", "raiting": "10.0", "url": ""}}
 ]
 
 data = {}
