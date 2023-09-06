@@ -41,13 +41,26 @@ async function anylizyVideo(id) {
     const info = await ytdl.getInfo(id);
     const videoFormat = ytdl.chooseFormat(info.formats, { quality: 'highestvideo' });
     const audioFormat = ytdl.chooseFormat(info.formats, { quality: 'highestaudio' });
-    
+
 
     return {
         audioUrl: audioFormat.url,
         videoUrl: videoFormat.url,
         thumbinalUrl: info.videoDetails.thumbnails[info.videoDetails.thumbnails.length - 1].url
     }
+}
+
+async function GetShikimoriGraphql(name) {
+    const response = await fetch('https://shikimori.me/api/graphql', {
+        method: 'POST', body: {
+            operationName: null,
+            query: `{animes(search:"${name}",limit: 1,kind: "!special",status: "!released") {    id    russian    kind    status    season    studios {      name    }  }}`,
+            variables: {}
+        }
+    });
+
+
+    console.log(response);
 }
 
 async function GetShikimori(name) {
@@ -59,29 +72,29 @@ async function GetShikimori(name) {
         return GetShikimori(name);
     }
     const data = await response.json();
-    console.log('Return Data Length: '+ data.length);
+    console.log('Return Data Length: ' + data.length);
     return data;
 }
 
 async function updateRepository(info_count) {
     try {
-      // Обновляем репозиторий (получаем изменения из удаленного репо)
-      await git.pull();
-  
-      // Добавляем файл data.json в индекс
-      await git.add('data.json');
-  
-      // Создаем коммит с сообщением, в котором используется значение info_count
-      await git.commit(`Updated data.json, anime ${info_count}`);
-  
-      // Отправляем коммиты на удаленный репозиторий
-      await git.push();
-  
-      console.log('Repository update successful!');
+        // Обновляем репозиторий (получаем изменения из удаленного репо)
+        await git.pull();
+
+        // Добавляем файл data.json в индекс
+        await git.add('data.json');
+
+        // Создаем коммит с сообщением, в котором используется значение info_count
+        await git.commit(`Updated data.json, anime ${info_count}`);
+
+        // Отправляем коммиты на удаленный репозиторий
+        await git.push();
+
+        console.log('Repository update successful!');
     } catch (error) {
-      console.error('Error updating repository:', error);
+        console.error('Error updating repository:', error);
     }
-  }
+}
 
 let data = {};
 
@@ -95,7 +108,7 @@ getChannelVideos()
             const shiki = await GetShikimori(extractTitleFromText(video.snippet.title))
             const formats = await anylizyVideo(id);
 
-            if(shiki.length != 0 && formats){
+            if (shiki.length != 0 && formats) {
                 console.log("Add data: " + id);
                 data[id] = {
                     url: `https://www.youtube.com/watch?v=${id}`,
