@@ -12,7 +12,7 @@ const MAX_RESULTS = 5;
 // Создаем клиент YouTube Data API
 const youtube = google.youtube({
     version: 'v3',
-    auth: 'custom-key-api'
+    auth: ''
 });
 
 const git = simpleGit();
@@ -42,7 +42,7 @@ async function anylizyVideo(id) {
     const videoFormat = ytdl.chooseFormat(info.formats, { quality: 'highestvideo' });
     const audioFormat = ytdl.chooseFormat(info.formats, { quality: 'highestaudio' });
 
-
+    console.log('Loaded video');
     return {
         audioUrl: audioFormat.url,
         videoUrl: videoFormat.url,
@@ -51,16 +51,25 @@ async function anylizyVideo(id) {
 }
 
 async function GetShikimoriGraphql(name) {
+    console.log('Search Anime: ' + name);
+
     const response = await fetch('https://shikimori.me/api/graphql', {
-        method: 'POST', body: {
-            operationName: null,
-            query: `{animes(search:"${name}",limit: 1,kind: "!special",status: "!released") {    id    russian    kind    status    season    studios {      name    }  }}`,
-            variables: {}
-        }
+        method: 'POST',
+        "headers": {
+            "Content-Type": "application/json; charset=utf-8",
+        },
+        body: "{\"operationName\":null,\"query\":\"{animes(search:\\\""+name+"\\\", limit: 1,kind: \\\"!special\\\",status: \\\"!released\\\"){id,russian,score,kind,status,season,studios{name}}}\",\"variables\":{}}"
     });
 
-
-    console.log(response);
+    if (response.status == 429) {
+        await sleep(1000);
+        console.log('Sleep: 1000');
+        return GetShikimoriGraphql(name);
+    }
+    console.log('Status code: ' + response.status);
+    const data = await response.json();
+    console.log('Return Data Length: ' + data.data.animes.length);
+    return data.data.animes;
 }
 
 async function GetShikimori(name) {
@@ -105,7 +114,7 @@ getChannelVideos()
         for (let index = 0; index < videos.length; index++) {
             const video = videos[index];
             const id = video.id.videoId;
-            const shiki = await GetShikimori(extractTitleFromText(video.snippet.title))
+            const shiki = await GetShikimoriGraphql(extractTitleFromText(video.snippet.title))
             const formats = await anylizyVideo(id);
 
             if (shiki.length != 0 && formats) {
@@ -118,7 +127,12 @@ getChannelVideos()
                     "anime": {
                         "name": shiki[0].russian,
                         "raiting": shiki[0].score,
-                        "id": shiki[0].id
+                        "id": shiki[0].id,
+                        "score": shiki[0].score,
+                        "kind": shiki[0].kind,
+                        "status": shiki[0].status,
+                        "season": shiki[0].season,
+                        "studio": shiki[0].studios[0].name
                     }
                 }
             }
