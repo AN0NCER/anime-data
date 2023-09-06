@@ -12,7 +12,7 @@ const MAX_RESULTS = 5;
 // Создаем клиент YouTube Data API
 const youtube = google.youtube({
     version: 'v3',
-    auth: '', // В этом примере, пустой токен, так как аутентификация не требуется.
+    auth: 'custom-key-api'
 });
 
 const git = simpleGit();
