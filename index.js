@@ -3,6 +3,7 @@ import { google } from 'googleapis';
 import fetch from 'node-fetch';
 import fs from 'fs';
 import simpleGit from 'simple-git';
+import child_process from 'child_process';
 
 // ID канала, с которого хотите получить видео
 const CHANNEL_ID = 'UC6pGDc4bFGD1_36IKv3FnYg';
@@ -32,22 +33,28 @@ async function getChannelVideos() {
         return videos;
     } catch (error) {
         console.error('Error fetching channel videos:', error.message);
+        SendError({ error: error });
         return [];
     }
 }
 
 async function anylizyVideo(id) {
-    console.log('Loadig Video Id: ' + id);
-    const info = await ytdl.getInfo(id);
-    const videoFormat = ytdl.chooseFormat(info.formats, { quality: 'highestvideo' });
-    const audioFormat = ytdl.chooseFormat(info.formats, { quality: 'highestaudio' });
+    try {
+        console.log('Loadig Video Id: ' + id);
+        const info = await ytdl.getInfo(id);
+        const videoFormat = ytdl.chooseFormat(info.formats, { quality: 'highestvideo' });
+        const audioFormat = ytdl.chooseFormat(info.formats, { quality: 'highestaudio' });
 
-    console.log('Loaded video');
-    return {
-        audioUrl: audioFormat.url,
-        videoUrl: videoFormat.url,
-        thumbinalUrl: info.videoDetails.thumbnails[info.videoDetails.thumbnails.length - 1].url
+        console.log('Loaded video');
+        return {
+            audioUrl: audioFormat.url,
+            videoUrl: videoFormat.url,
+            thumbinalUrl: info.videoDetails.thumbnails[info.videoDetails.thumbnails.length - 1].url
+        }
+    } catch (error) {
+        throw new Error(`Error anylizeVideo(${id}): ${error}`);
     }
+
 }
 
 async function GetShikimoriGraphql(name) {
@@ -58,7 +65,7 @@ async function GetShikimoriGraphql(name) {
         "headers": {
             "Content-Type": "application/json; charset=utf-8",
         },
-        body: "{\"operationName\":null,\"query\":\"{animes(search:\\\""+name+"\\\", limit: 1,kind: \\\"!special\\\",status: \\\"!released\\\"){id,russian,score,kind,status,season,studios{name}}}\",\"variables\":{}}"
+        body: "{\"operationName\":null,\"query\":\"{animes(search:\\\"" + name + "\\\", limit: 1,kind: \\\"!special\\\",status: \\\"!released\\\"){id,russian,score,kind,status,season,studios{name}}}\",\"variables\":{}}"
     });
 
     if (response.status == 429) {
@@ -101,6 +108,7 @@ async function updateRepository(info_count) {
 
         console.log('Repository update successful!');
     } catch (error) {
+        SendError({ error: error });
         console.error('Error updating repository:', error);
     }
 }
@@ -111,6 +119,7 @@ let data = {};
 getChannelVideos()
     .then(async (videos) => {
         data = {};
+        let list_animes = [];
         for (let index = 0; index < videos.length; index++) {
             const video = videos[index];
             const id = video.id.videoId;
@@ -119,6 +128,11 @@ getChannelVideos()
 
             if (shiki.length != 0 && formats) {
                 console.log("Add data: " + id);
+                console.log(shiki[0]);
+                if (shiki[0].studios.length == 0) {
+                    shiki[0].studios.push({ "name": "Undefined" });
+                }
+                list_animes.push(shiki[0].russian);
                 data[id] = {
                     url: `https://www.youtube.com/watch?v=${id}`,
                     "img": formats.thumbinalUrl,
@@ -138,11 +152,13 @@ getChannelVideos()
             }
         }
         console.log(data);
+        SendComplete({ anime: list_animes });
         fs.writeFileSync('data.json', JSON.stringify(data));
         updateRepository(Object.keys(data).length)
     })
     .catch((error) => {
         console.error('Error:', error.message);
+        SendError({ error: error });
     });
 
 function extractTitleFromText(text) {
@@ -152,4 +168,16 @@ function extractTitleFromText(text) {
 
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+function SendError({ file = 'index.js', title = "Trailers", error = "No text" } = {}) {
+    const command = 'node ./send.js';
+    const childProcess = child_process.spawn(command, ['-m', `"${error}"`, '-t', 'false'], { shell: true, detached: true, stdio: 'ignore' });
+    childProcess.unref();
+}
+
+function SendComplete({ title = "Trailers", anime = [] } = {}) {
+    const command = 'node ./send.js';
+    const childProcess = child_process.spawn(command, ['-m', "Trailers", '-t', 'true', '-a', `"${anime.toString()}"`], { shell: true, detached: true, stdio: 'ignore' });
+    childProcess.unref();
 }
