@@ -33,7 +33,7 @@ The repository serves the site [Tunime](https://an0ncer.github.io), enriching it
 <details>
   <summary>Anime Data v2.0 (2.0.0)</summary>
 
-  <code><strong>URL:</strong> https://raw.githubusercontent.com/AN0NCER/anime-data/main/data.json</code>
+  <code><strong>URL:</strong> https://raw.githubusercontent.com/AN0NCER/anime-data/main/data-v2.json</code>
 
   <pre><span class="pl-kos">[</span>
     <span class="pl-kos">{</span>
