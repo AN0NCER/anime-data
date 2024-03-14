@@ -1,31 +1,55 @@
-# Python Synchronizer
+# Anime Data
 
-This script fetches data from youtube video and puts it in `data.json`  which is used by [Tunime](https://an0ncer.github.io) website
+The repository serves the site [Tunime](https://an0ncer.github.io), enriching it with data from the anime world.
 
-This script uses libraries: **`youtube_dl`**, **`gitpython`**, and standard libraries
+## 
 
-___
+<details>
+  <summary>Anime Data v1.0 (1.9.8)</summary>
 
-## Notes
+  <code><strong>URL:</strong> https://raw.githubusercontent.com/AN0NCER/anime-data/main/data.json<code>
 
-This piece of code gets the video quality in 720p:
+  <pre><span class="pl-kos">{</span>
+    <span class="pl-c1">keys</span>:<span class="pl-kos">{</span>
+        <span class="pl-c1">url</span>: <span class="pl-s1">string</span><span class="pl-kos">,</span>
+        <span class="pl-c1">img</span>: <span class="pl-s1">string</span><span class="pl-kos">,</span>
+        <span class="pl-c1">audio</span>: <span class="pl-s1">string</span><span class="pl-kos">,</span>
+        <span class="pl-c1">video</span>: <span class="pl-s1">string</span><span class="pl-kos">,</span>
+        <span class="pl-c1">anime</span>:<span class="pl-kos">{</span>
+            <span class="pl-c1">name</span>: <span class="pl-s1">string</span><span class="pl-kos">,</span>
+            <span class="pl-c1">eng</span>: <span class="pl-s1">string</span><span class="pl-kos">,</span>
+            <span class="pl-c1">raiting</span>: <span class="pl-s1">number</span><span class="pl-kos">,</span>
+            <span class="pl-c1">id</span>: <span class="pl-s1">string</span><span class="pl-kos">,</span>
+            <span class="pl-c1">score</span>: <span class="pl-s1">number</span><span class="pl-kos">,</span>
+            <span class="pl-c1">kind</span>: <span class="pl-s1">string</span><span class="pl-kos">,</span>
+            <span class="pl-c1">status</span>: <span class="pl-s1">string</span><span class="pl-kos">,</span>
+            <span class="pl-c1">season</span>: <span class="pl-s1">string</span> <span class="pl-c1">|</span> <span class="pl-c1">undefined</span><span class="pl-kos">,</span>
+            <span class="pl-c1">studio</span>: <span class="pl-s1">string</span>
+        <span class="pl-kos">}</span>
+    <span class="pl-kos">}</span>
+<span class="pl-kos">}</span></pre>
+</details>
 
-```python
-# Find the best audio format in M4A format
-best_audio_format = None
-for f in formats:
-    if f['acodec'] == 'mp4a.40.2' and (best_audio_format is None or f.get('abr', 0) > best_audio_format.get('abr', 0)):
-        best_audio_format = f
-```
+<details>
+  <summary>Anime Data v2.0 (2.0.0)</summary>
 
-This piece of code gets the best audio track:
+  <code><strong>URL:</strong> https://raw.githubusercontent.com/AN0NCER/anime-data/main/data.json<code>
 
-```python
-# Find the best video format with a height of 720 pixels or less
-best_video_format = None
-for f in formats:
-    if f['height'] != None and f['ext'] == "mp4" and f.get('height', 0) <= 720 and (best_video_format is None or f.get('height', 0) > best_video_format.get('height', 0)):
-        best_video_format = f
-```
-
-Then the audio and video are connected and played on the site
+  <pre><span class="pl-kos">[</span>
+    <span class="pl-kos">{</span>
+        <span class="pl-c1">id</span>: string
+        <span class="pl-s1">youtube</span>: <span class="pl-kos">{</span>
+            <span class="pl-s1">link</span>: <span class="pl-s1">string</span><span class="pl-kos">,</span>
+            <span class="pl-c1">preview</span>: <span class="pl-s1">string</span><span class="pl-kos">,</span>
+            <span class="pl-c1">video</span>: <span class="pl-s1">string</span>
+        <span class="pl-kos">}</span>
+        <span class="pl-s1">anime</span>: <span class="pl-kos">{</span>
+            <span class="pl-s1">eng</span>: string<span class="pl-kos">,</span>
+            <span class="pl-s1">rus</span>: <span class="pl-s1">string</span><span class="pl-kos">,</span>
+            <span class="pl-s1">kind</span>: <span class="pl-s1">string</span><span class="pl-kos">,</span>
+            <span class="pl-s1">status</span>: <span class="pl-s1">string</span><span class="pl-kos">,</span>
+            <span class="pl-s1">studio</span>: <span class="pl-s1">string</span>
+        <span class="pl-kos">}</span>
+    <span class="pl-kos">}</span>
+<span class="pl-kos">]</span></pre>
+</details>
